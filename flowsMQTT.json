@@ -1,0 +1,445 @@
+[
+    {
+        "id": "ccc427fcd52f356b",
+        "type": "tab",
+        "label": "MQTT AAS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4a9f66629568670c",
+        "type": "mqtt in",
+        "z": "ccc427fcd52f356b",
+        "name": "",
+        "topic": "Publish/Job/Processdata",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "fb8e3bacbb2d6463",
+                "be998483a42e16dd"
+            ]
+        ],
+        "info": "This node subscribes to an MQTT broker and listens for \r\nincoming messages on all topics (#). \r\nThe topic and Broker must be updated for actual topic and Broker-Address.\r\nUser and Password must be maintained.\r\nIt uses QoS level 2 to ensure message delivery."
+    },
+    {
+        "id": "fb8e3bacbb2d6463",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "1cb07848b88c7d0f",
+        "type": "function",
+        "z": "ccc427fcd52f356b",
+        "name": "Value Mapping",
+        "func": "// Eingehendes JSON-Objekt aus msg.payload\nlet inputData = msg.payload;\n\n// Hilfsfunktion, um Felder mit Standardwerten zu füllen\nfunction getOrDefault(value, defaultValue = null) {\n    return value !== undefined ? value : defaultValue;\n}\nfunction isValidISODateTime(value) {\n  const isoDateTimeRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([+-]\\d{2}:\\d{2}|Z)$/;\n  return isoDateTimeRegex.test(value);\n} \nlet keyName = \"ProductionOperationRecords MQTT \";\n\nif (inputData.job!=null && isValidISODateTime(inputData.Time)){\n// Neues JSON-Objekt gemäß der Zielstruktur erstellen\nlet newObject = {\n    ProductionOperationRecords: {\n        KeyName: keyName,\n        StartDate: getOrDefault(inputData.Time),\n        OperationNumber: getOrDefault(inputData.job),\n        SetupTime: getOrDefault(inputData.DATANAME),\n        ProductionTime: getOrDefault(inputData.DATANAME),\n        DelayTime: getOrDefault(inputData.DATANAME),\n        ProducedQuantity: 1,\n        GoodQuantity: 1,\n        Factor1: getOrDefault(inputData.Galvo_X0),\n        Factor2: getOrDefault(inputData.Servo_X0),\n        Factor3: getOrDefault(inputData.MemTotal),\n        Factor4: getOrDefault(inputData.Servo_Y0)\n    }\n};\nmsg.payload = newObject;\n\nmsg.serverTimestamp = new Date().toISOString();\n\nreturn msg;\n} else {\n node.warn(`No Job ID or invalid time format: ` + inputData.job + \" \" + inputData.Time);\n}\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "28676a494e054c87",
+                "c9f8dd40b4e247cd"
+            ]
+        ]
+    },
+    {
+        "id": "28676a494e054c87",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 40",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "3d331513e31d3713",
+        "type": "switch",
+        "z": "ccc427fcd52f356b",
+        "name": "",
+        "property": "changed",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1110,
+        "y": 400,
+        "wires": [
+            [
+                "d01185d802206444",
+                "f5b3e905b7045d93"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d01185d802206444",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 42",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "445c8978decb5e29",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 44",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c9f8dd40b4e247cd",
+        "type": "function",
+        "z": "ccc427fcd52f356b",
+        "name": "Aggregate data and calculate mean",
+        "func": "// Liste der Attribute, für die der Mittelwert berechnet werden soll\nconst attributes = [\"Factor1\", \"Factor2\", \"Factor3\", \"Factor4\"];\n\n// Sicherstellen, dass die Payload gültig ist\nconst records = msg.payload?.ProductionOperationRecords;\n\nif (!records) {\n    node.warn(\"Fehlende oder ungültige ProductionOperationRecords in der Payload\");\n    return null; // Beenden, wenn die erwartete Struktur nicht vorhanden ist\n}\n\n// Globale oder Flow-Variablen für Tracking abrufen\nlet aggregateData = flow.get(\"aggregateData\") || {};\nlet currentJob = flow.get(\"currentJob\") || null;\n\n\nlet startTime = flow.get(\"startTime\") || null;\nif (typeof startTime === \"string\") {\n    startTime = new Date(startTime);\n}\nlet endTime = flow.get(\"startTime\") || null;\nlet msgTime = msg.serverTimestamp;  \nif (typeof msgTime === \"string\") {\n    msgTime = new Date(msgTime);\n}\n\n// Neue Kopie von StartTime erstellen\nlet tempTime = new Date(startTime.getTime()); \n\n// Zeitzone manuell auf UTC+1 korrigieren\ntempTime.setUTCHours(tempTime.getUTCHours() + 1);\n\nlet prodTime = msgTime - startTime; // Dauer berechnen\n\n// Startzeit in UTC+1 speichern\nlet formattedTime = tempTime.toISOString();\n\n// Die aktuelle Job-ID aus der Nachricht extrahieren\nconst newJob = records.OperationNumber;\n\n// Prüfen, ob sich der Job geändert hat\nif (currentJob !== newJob) { //\n\n    if(currentJob == null) {\n         flow.set(\"currentJob\", newJob);\n         return;\n    }\n    // Mittelwert berechnen und in den Payload schreiben\n    attributes.forEach(attr => {\n        const data = aggregateData[attr];\n        if (data?.count > 0) {\n            records[attr] = data.sum / data.count; // Mittelwert berechnen und in den Payload schreiben\n        } else {\n            records[attr] = null; // Kein Datenwert vorhanden\n        }\n    });\n\n    flow.set(\"startTime\", msgTime);\n    msg.payload.ProductionOperationRecords.StartDate = formattedTime;\n    msg.payload.ProductionOperationRecords.ProductionTime = prodTime;\n\n    //vorherigen job im Payload hinterlegen\n    msg.payload.ProductionOperationRecords.OperationNumber = currentJob;\n\n    // Debug-Informationen hinzufügen\n    msg.payload.aggregateData = aggregateData;\n    msg.payload.ProductionOperationRecords.KeyName = msg.payload.ProductionOperationRecords.KeyName + new Date();\n    // Aggregationsdaten zurücksetzen\n    aggregateData = {};\n    attributes.forEach(attr => {\n        aggregateData[attr] = { sum: 0, count: 0 };\n    });\n\n    // Neuen Job speichern\n    //currentJob = newJob;\n    flow.set(\"currentJob\", newJob);\n\n    // Zurücksetzen der Variablen\n    flow.set(\"aggregateData\", aggregateData);\n\n    msg.changed = \"true\";\n\n    return msg; // Nachricht mit aktualisierter Payload zurückgeben\n}\n\n// Daten aggregieren\nattributes.forEach(attr => {\n    const value = parseFloat(records[attr]);\n\n    if (!isNaN(value)) {\n        if (!aggregateData[attr]) {\n            aggregateData[attr] = { sum: 0, count: 0 };\n        }\n        aggregateData[attr].sum += value;\n        aggregateData[attr].count += 1;\n    } else {\n        node.warn(`Invalid value for attribute ${attr}: ${records[attr]}`);\n    }\n});\n\n// Aktualisierte Aggregationsdaten speichern\nflow.set(\"aggregateData\", aggregateData);\n\n// Mittelwerte berechnen und in die Payload schreiben (ohne Job-Wechsel)\nattributes.forEach(attr => {\n    const data = aggregateData[attr];\n    if (data?.count > 0) {\n        records[attr] = data.sum / data.count; // Mittelwert berechnen und in die Payload schreiben\n    } else {\n        records[attr] = null; // Kein Datenwert vorhanden\n    }\n});\n\n/*\nnode.warn(\"currentJob: \" + flow.get(\"currentJob\"));\nnode.warn(\"aggregateData: \" + flow.get(\"aggregateData\"));\nnode.warn(\"startTime: \" + flow.get(\"startTime\"));\n*/\n\n// Nachricht mit aktualisierter Payload zurückgeben\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 320,
+        "wires": [
+            [
+                "445c8978decb5e29",
+                "3d331513e31d3713"
+            ]
+        ]
+    },
+    {
+        "id": "f5b3e905b7045d93",
+        "type": "function",
+        "z": "ccc427fcd52f356b",
+        "name": "Generate request body",
+        "func": "// Example output that comes from the previous node\nlet output = msg.payload; // Here the incoming payload is used\n\n// Conversion of the output to the desired body\nmsg.payload = {\n    \"modelType\": \"SubmodelElementCollection\",\n    \"idShort\": output.ProductionOperationRecords.KeyName,\n    \"value\": [\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.StartDate,\n            \"valueType\": \"xs:dateTime\",\n            \"idShort\": \"StartDate\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.OperationNumber,\n            \"valueType\": \"xs:int\",\n            \"idShort\": \"OperationNumber\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.SetupTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"SetupTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProductionTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProductionTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.DelayTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"DelayTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProducedQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProducedQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.GoodQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"GoodQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor1, //parseFloat(output.Factor1.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor1\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor2, //parseFloat(output.Factor2.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor2\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor3, //parseFloat(output.Factor3.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor3\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor4, //parseFloat(output.Factor4.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor4\"\n        }\n    ]\n};\n\nmsg.topic = \"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==\";\n\nreturn msg; // Rückgabe des modifizierten msg\n\n\n\n\n\n\n\n/*// Hole das Array mit den beiden Objekten\nlet dataArray = msg.payload;\n//let newmsg = {};\n\n// Variablen für die Originaldaten und die neuen Werte\nlet originalData = null;\nlet newData = null;\n\n// Durchlaufe das Array und identifiziere die Objekte\ndataArray.forEach(item => {\n    if (item.payload && item.payload.modelType === \"Submodel\") {\n        originalData = item; // Das Originalobjekt\n    } else if (item.payload && item.payload.CapacityPlanningDetailedScheduling) {\n        newData = item.payload.CapacityPlanningDetailedScheduling; // Das neue Objekt\n    }\n});\n\n// Funktion zum Aktualisieren der Werte\nfunction updateValues(original, newValues) {\n    // Aktualisiere die CapacityParameters\n    if (original.payload.submodelElements) {\n        let capacityParams = original.payload.submodelElements.find(el => el.idShort === \"CapacityParameters\");\n        if (capacityParams && newValues.CapacityParameters) {\n            for (let key in newValues.CapacityParameters) {\n                if (newValues.CapacityParameters.hasOwnProperty(key)) {\n                    let param = capacityParams.value.find(p => p.idShort === key);\n                    if (param) {\n                        param.value = newValues.CapacityParameters[key];\n                    }\n                }\n            }\n        }\n    }\n\n    // Aktualisiere die ProductionOperationRecords\n    if (original.payload.submodelElements) {\n        let productionRecords = original.payload.submodelElements.find(el => el.idShort === \"ProductionOperationRecords\");\n        if (productionRecords && newValues.ProductionOperationRecords) {\n            for (let key in newValues.ProductionOperationRecords) {\n                if (newValues.ProductionOperationRecords.hasOwnProperty(key)) {\n                    let record = productionRecords.value.find(p => p.idShort === key);\n                    if (record) {\n                        record.value = newValues.ProductionOperationRecords[key];\n                    }\n                }\n            }\n        }\n    }\n}\n// Überprüfen, ob beide Daten gefunden wurden\nif (originalData && newData) {\n    // Aktualisiere die Originaldaten mit den neuen Werten\n    updateValues(originalData, newData);\n    \n    // Setze das aktualisierte JSON wieder in msg.payload\n    msg.payload = originalData;\n} else {\n    // Fehlermeldung, wenn eines der Objekte nicht gefunden wurde\n    msg.payload = { error: \"Ein oder beide Objekte wurden nicht gefunden.\" };\n}\n\n// Setze den Header\nconst headers = {\n    \"Content-Type\": \"application/json\"\n};\n\n// **Erstelle ein komplett neues Objekt** und gebe es zurück\nreturn {\n    payload: msg.payload.payload,\n    headers: headers,\n    topic: msg.payload.topic  //\"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ\"\n\n}; */",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 480,
+        "wires": [
+            [
+                "0ec547fc31b48de5",
+                "01e5bb6b18231768"
+            ]
+        ]
+    },
+    {
+        "id": "0ec547fc31b48de5",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 45",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "be998483a42e16dd",
+        "type": "function",
+        "z": "ccc427fcd52f356b",
+        "name": "Global Variable",
+        "func": "let startTime = flow.get(\"startTime\") || null;\nif (startTime == null) {\n     let timenew = new Date();\n     flow.set(\"startTime\", timenew);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 160,
+        "wires": [
+            [
+                "1cb07848b88c7d0f",
+                "36105860c6688d2e"
+            ]
+        ],
+        "info": "This node sets up the Submodel ID as a global variable, \r\nwhich can be used later in the flow for API requests or data handling."
+    },
+    {
+        "id": "01e5bb6b18231768",
+        "type": "link out",
+        "z": "ccc427fcd52f356b",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "f73f4b9760a5209d"
+        ],
+        "x": 1545,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "6e4b43fab50d1eeb",
+        "type": "comment",
+        "z": "ccc427fcd52f356b",
+        "name": "Request Body",
+        "info": "This function node constructs a request body based on the mapped data \nfrom previous nodes, preparing it for API requests.",
+        "x": 1350,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "36105860c6688d2e",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8f2edf61c78495eb",
+        "type": "mqtt in",
+        "z": "ccc427fcd52f356b",
+        "name": "",
+        "topic": "Publish/TestMQTT",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "be998483a42e16dd",
+                "69b71d4a8831a6ef"
+            ]
+        ],
+        "info": "This node subscribes to an MQTT broker and listens for \r\nincoming messages on all topics (#). \r\nThe topic and Broker must be updated for actual topic and Broker-Address.\r\nUser and Password must be maintained.\r\nIt uses QoS level 2 to ensure message delivery."
+    },
+    {
+        "id": "b7a04fabce29d2e3",
+        "type": "comment",
+        "z": "ccc427fcd52f356b",
+        "name": "mapping to AAS data structure",
+        "info": "This function node maps the incoming JSON payload from MQTT messages \nto a new structure for ProductionOperationRecords, \nfilling in default values where necessary.",
+        "x": 560,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "60e5264cd3ffce12",
+        "type": "comment",
+        "z": "ccc427fcd52f356b",
+        "name": "Aggregation node",
+        "info": "This function node aggregates data for specified attributes \nand calculates their mean values, resetting the aggregation data \nwhen a new job is detected.",
+        "x": 810,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ff4b9661cb6f2eb9",
+        "type": "comment",
+        "z": "ccc427fcd52f356b",
+        "name": "check for changed job",
+        "info": "This switch node evaluates a condition based on the message's \n\"changed\" property and directs the flow accordingly.",
+        "x": 1160,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "2037bdba3dd5b3da",
+        "type": "function",
+        "z": "ccc427fcd52f356b",
+        "name": "reset flow variables",
+        "func": "// Zurücksetzen der Variablen\nflow.set(\"aggregateData\", null);\nflow.set(\"startTime\", null);\nflow.set(\"currentJob\", null);\n\n// Warnung mit den aktuellen Werten ausgeben\nnode.warn(\"currentJob: \" + flow.get(\"currentJob\"));\nnode.warn(\"aggregateData: \" + flow.get(\"aggregateData\"));\nnode.warn(\"startTime: \" + flow.get(\"startTime\"));\n\n// Nachricht zurückgeben\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c985ecfc87b35d5b",
+        "type": "comment",
+        "z": "ccc427fcd52f356b",
+        "name": "Nodes for testing purposes",
+        "info": "",
+        "x": 130,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d94b5b9a5738d217",
+        "type": "inject",
+        "z": "ccc427fcd52f356b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "2037bdba3dd5b3da"
+            ]
+        ]
+    },
+    {
+        "id": "4e9f258c948805d4",
+        "type": "link in",
+        "z": "ccc427fcd52f356b",
+        "name": "link in reset flow var",
+        "links": [
+            "83219f4f574c6c38"
+        ],
+        "x": 85,
+        "y": 480,
+        "wires": [
+            [
+                "2037bdba3dd5b3da"
+            ]
+        ]
+    },
+    {
+        "id": "69b71d4a8831a6ef",
+        "type": "debug",
+        "z": "ccc427fcd52f356b",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5a545599a506b189",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "IPAdress",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

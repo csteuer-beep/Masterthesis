@@ -1,0 +1,2225 @@
+[
+    {
+        "id": "d75e80dd9788519e",
+        "type": "tab",
+        "label": "Testing Flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a94450fe8d71eaa3",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test01.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1080,
+        "wires": [
+            [
+                "86301a0cee105e83",
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "86301a0cee105e83",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "614ee7e5ea0de5ea",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "CSV Flow Tests",
+        "info": "",
+        "x": 140,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "cfa9c3fbe4607a20",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-01",
+        "info": "",
+        "x": 110,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d7b35f2d007269d1",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "c235de1c8e125d7a",
+                "2935c4e93b25c7ed"
+            ]
+        ]
+    },
+    {
+        "id": "2935c4e93b25c7ed",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV01.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 220,
+        "wires": [
+            [
+                "aef33636d434ea15"
+            ]
+        ]
+    },
+    {
+        "id": "aef33636d434ea15",
+        "type": "csv",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "spec": "rfc",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1110,
+        "y": 520,
+        "wires": [
+            [
+                "ae34af02ee5c892c"
+            ]
+        ]
+    },
+    {
+        "id": "ae34af02ee5c892c",
+        "type": "link out",
+        "z": "d75e80dd9788519e",
+        "name": "link out to CSV Flow",
+        "mode": "link",
+        "links": [
+            "8c185bf6c9669a0a"
+        ],
+        "x": 1275,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "564c4dd522517f09",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "634c31d5b7357ab1"
+            ]
+        ]
+    },
+    {
+        "id": "634c31d5b7357ab1",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV02.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 320,
+        "wires": [
+            [
+                "aef33636d434ea15"
+            ]
+        ]
+    },
+    {
+        "id": "057e61b79cfaea2f",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-02",
+        "info": "",
+        "x": 110,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7d68ca29374c1667",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 420,
+        "wires": [
+            [
+                "b7f54ce47061a3e4"
+            ]
+        ]
+    },
+    {
+        "id": "b7f54ce47061a3e4",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV03.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "aef33636d434ea15"
+            ]
+        ]
+    },
+    {
+        "id": "4f2ae022e58f37dc",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-03",
+        "info": "",
+        "x": 110,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "88f0d7684b596fd6",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 520,
+        "wires": [
+            [
+                "2ec52f944d05f594"
+            ]
+        ]
+    },
+    {
+        "id": "2ec52f944d05f594",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV04.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 520,
+        "wires": [
+            [
+                "aef33636d434ea15"
+            ]
+        ]
+    },
+    {
+        "id": "650acb12fd5e23a4",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-04",
+        "info": "",
+        "x": 110,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "8890f41013238aae",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 620,
+        "wires": [
+            [
+                "fe3712da6229b8c5"
+            ]
+        ]
+    },
+    {
+        "id": "fe3712da6229b8c5",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV05.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 620,
+        "wires": [
+            [
+                "aef33636d434ea15",
+                "d4b3a969e343d7b8"
+            ]
+        ]
+    },
+    {
+        "id": "865c859c5ac37b4e",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-05",
+        "info": "",
+        "x": 110,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "73c5cba5f31b384f",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 720,
+        "wires": [
+            [
+                "c49c787de7470d85"
+            ]
+        ]
+    },
+    {
+        "id": "c49c787de7470d85",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV06.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 720,
+        "wires": [
+            [
+                "aef33636d434ea15"
+            ]
+        ]
+    },
+    {
+        "id": "f991dbf45642b1f4",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-06",
+        "info": "",
+        "x": 110,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "0c3f64aaead94ad3",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 820,
+        "wires": [
+            [
+                "f54ea6b2c50b77d4"
+            ]
+        ]
+    },
+    {
+        "id": "f54ea6b2c50b77d4",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\CSV07.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 820,
+        "wires": [
+            [
+                "aef33636d434ea15",
+                "7cd3b18baf3b4880"
+            ]
+        ]
+    },
+    {
+        "id": "4ae19a9d075b50d7",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "csv-07",
+        "info": "",
+        "x": 110,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c235de1c8e125d7a",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d4b3a969e343d7b8",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "7cd3b18baf3b4880",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "c904d2f96ec27246",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT Tests",
+        "info": "",
+        "x": 110,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "bb6e1702da6fbb32",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1080,
+        "wires": [
+            [
+                "a94450fe8d71eaa3"
+            ]
+        ]
+    },
+    {
+        "id": "60dd9238a047e4af",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-01",
+        "info": "",
+        "x": 100,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "2d5f675af8d793c7",
+        "type": "mqtt out",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "topic": "Publish/TestMQTT",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5a545599a506b189",
+        "x": 1250,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "feb21bc82f8e9a9f",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test02.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1160,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "80592a0c81b4492b",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1160,
+        "wires": [
+            [
+                "feb21bc82f8e9a9f"
+            ]
+        ]
+    },
+    {
+        "id": "24c11460fb82b28c",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-02",
+        "info": "",
+        "x": 100,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "d823c65f5749a8b4",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test03.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1240,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "784e527b4aae962e",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1240,
+        "wires": [
+            [
+                "d823c65f5749a8b4"
+            ]
+        ]
+    },
+    {
+        "id": "adf5a59d341c7981",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-03",
+        "info": "",
+        "x": 100,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "27a73af4a6fc16f6",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test04.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1320,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "2fdf5fd4ce808652",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1320,
+        "wires": [
+            [
+                "27a73af4a6fc16f6"
+            ]
+        ]
+    },
+    {
+        "id": "a3341c0a8ad47cdb",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-04",
+        "info": "",
+        "x": 100,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "e0ec611ffcf9ddf8",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test05.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1400,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "467cfdbc3f8b1d74",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1400,
+        "wires": [
+            [
+                "e0ec611ffcf9ddf8"
+            ]
+        ]
+    },
+    {
+        "id": "bf8e6358e8decd6a",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-05",
+        "info": "",
+        "x": 100,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "ec00e8f66b37e15a",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test06.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1480,
+        "wires": [
+            [
+                "a5f3205aa1a223a8",
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "fc5ce2c4345c9d41",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1480,
+        "wires": [
+            [
+                "ec00e8f66b37e15a"
+            ]
+        ]
+    },
+    {
+        "id": "efae47b13d2c42bf",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-06",
+        "info": "",
+        "x": 100,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "a5f3205aa1a223a8",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "bb58923821850ed2",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test07.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1560,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "c7f03d1de4fb1965",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1560,
+        "wires": [
+            [
+                "bb58923821850ed2"
+            ]
+        ]
+    },
+    {
+        "id": "fc61df04a846f495",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-07",
+        "info": "",
+        "x": 100,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "29d510207db5fcfe",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test08.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1640,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "1e92ebc2bb45d62b",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1640,
+        "wires": [
+            [
+                "29d510207db5fcfe"
+            ]
+        ]
+    },
+    {
+        "id": "112f86f9c067eca1",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-08",
+        "info": "",
+        "x": 100,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "7a7e7216a349aea4",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test09.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1720,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "2eda4c1d199ae0e8",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1720,
+        "wires": [
+            [
+                "7a7e7216a349aea4"
+            ]
+        ]
+    },
+    {
+        "id": "48ac1fc124ebc842",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-09",
+        "info": "",
+        "x": 100,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "5aaa2b6255b59131",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test10.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1800,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "d7d7728ad6b47085",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1800,
+        "wires": [
+            [
+                "5aaa2b6255b59131"
+            ]
+        ]
+    },
+    {
+        "id": "49b5c5c2741f885f",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-10",
+        "info": "",
+        "x": 100,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "0431db5e05883392",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test11.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 540,
+        "y": 1880,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "5e0dd76f4cdc1f19",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1880,
+        "wires": [
+            [
+                "0431db5e05883392"
+            ]
+        ]
+    },
+    {
+        "id": "41926f7fff1b9b68",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-11",
+        "info": "",
+        "x": 100,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "720bbc7b4f097a8b",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test12.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1960,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "18a4d2a22416f3ae",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1960,
+        "wires": [
+            [
+                "720bbc7b4f097a8b"
+            ]
+        ]
+    },
+    {
+        "id": "8f871a5171b1e1f8",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-12",
+        "info": "",
+        "x": 100,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "d1a5060f407c1cad",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test13.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 2040,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "194c1b232a9003d9",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2040,
+        "wires": [
+            [
+                "d1a5060f407c1cad"
+            ]
+        ]
+    },
+    {
+        "id": "f5939c96f0d698a3",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-13",
+        "info": "",
+        "x": 100,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "bec625bef2c6ffa5",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test14.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 2120,
+        "wires": [
+            [
+                "e1a802b876d4f863"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "e754b5f257f9a73b",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2120,
+        "wires": [
+            [
+                "bec625bef2c6ffa5"
+            ]
+        ]
+    },
+    {
+        "id": "a49e41f77da2cf91",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-14",
+        "info": "",
+        "x": 100,
+        "y": 2080,
+        "wires": []
+    },
+    {
+        "id": "d8256ee45cc1eb8b",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\mqtt_data_test15.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 2200,
+        "wires": [
+            [
+                "2d5f675af8d793c7"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "353c94d498df575c",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2200,
+        "wires": [
+            [
+                "d8256ee45cc1eb8b"
+            ]
+        ]
+    },
+    {
+        "id": "bcac9d9137a5e4b6",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "MQTT-15",
+        "info": "",
+        "x": 100,
+        "y": 2160,
+        "wires": []
+    },
+    {
+        "id": "e1a802b876d4f863",
+        "type": "delay",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "2",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 840,
+        "y": 2120,
+        "wires": [
+            [
+                "da92d6939b60329f",
+                "2d5f675af8d793c7"
+            ]
+        ]
+    },
+    {
+        "id": "da92d6939b60329f",
+        "type": "debug",
+        "z": "d75e80dd9788519e",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "4dab2c3d535d6f68",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 440,
+        "y": 980,
+        "wires": [
+            [
+                "83219f4f574c6c38"
+            ]
+        ]
+    },
+    {
+        "id": "83219f4f574c6c38",
+        "type": "link out",
+        "z": "d75e80dd9788519e",
+        "name": "link out reset flow var",
+        "mode": "link",
+        "links": [
+            "4e9f258c948805d4"
+        ],
+        "x": 595,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "c824e42dc32b47ee",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "Reset Flow Variables in MQTT Flow",
+        "info": "Resets the Flow variables of the MQTT Flow, to \nstart with a \"fresh\" Flow for every test",
+        "x": 480,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "875a2e36f113fbfc",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPC-UA Tests",
+        "info": "",
+        "x": 110,
+        "y": 2340,
+        "wires": []
+    },
+    {
+        "id": "a75e02e587551839",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 420,
+        "y": 2360,
+        "wires": [
+            [
+                "59a8dba85704f319"
+            ]
+        ]
+    },
+    {
+        "id": "59a8dba85704f319",
+        "type": "link out",
+        "z": "d75e80dd9788519e",
+        "name": "link out reset flow var",
+        "mode": "link",
+        "links": [
+            "23449c706ff92a53"
+        ],
+        "x": 575,
+        "y": 2360,
+        "wires": []
+    },
+    {
+        "id": "1fd659c8032fd00c",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "Reset Flow Variables in OPC-UA Flow",
+        "info": "Resets the Flow variables of the OPC-UA  Flow, to \nstart with a \"fresh\" Flow for every test",
+        "x": 470,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "0d848e84da27d5ea",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest01.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2440,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "19874110ee9b3d53",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2440,
+        "wires": [
+            [
+                "0d848e84da27d5ea"
+            ]
+        ]
+    },
+    {
+        "id": "44000fb578aaa439",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-01",
+        "info": "",
+        "x": 100,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "2d0e72372a254787",
+        "type": "link out",
+        "z": "d75e80dd9788519e",
+        "name": "link out OPC UA",
+        "mode": "link",
+        "links": [
+            "43a75451aae5b270"
+        ],
+        "x": 1505,
+        "y": 2720,
+        "wires": []
+    },
+    {
+        "id": "9448278008623173",
+        "type": "function",
+        "z": "d75e80dd9788519e",
+        "name": "add timestamps",
+        "func": "msg.serverTimestamp = new Date();\nmsg.sourceTimestamp = new Date();\nmsg.statusCode = {value: 0};\nmsg.topic = \"ns=7;s=ActualPosition4\";\ndelete msg.filename;\ndelete msg.parts;\ndelete msg._event;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1360,
+        "y": 2720,
+        "wires": [
+            [
+                "2d0e72372a254787"
+            ]
+        ]
+    },
+    {
+        "id": "edc150833033412d",
+        "type": "json",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1170,
+        "y": 2720,
+        "wires": [
+            [
+                "9448278008623173"
+            ]
+        ]
+    },
+    {
+        "id": "c39cc76cbcbb0722",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest02.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2520,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "4fd6a2eae15578fc",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2520,
+        "wires": [
+            [
+                "c39cc76cbcbb0722"
+            ]
+        ]
+    },
+    {
+        "id": "c7c44b89c7e90afe",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-02",
+        "info": "",
+        "x": 100,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "0acc1a519a1cdb38",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest03.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2600,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "6fb10b5a69196e64",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2600,
+        "wires": [
+            [
+                "0acc1a519a1cdb38"
+            ]
+        ]
+    },
+    {
+        "id": "7adc08180d5d4fdf",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-03",
+        "info": "",
+        "x": 100,
+        "y": 2560,
+        "wires": []
+    },
+    {
+        "id": "8683040a2032488f",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest04.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2680,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "b1b444c87961f78f",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2680,
+        "wires": [
+            [
+                "8683040a2032488f"
+            ]
+        ]
+    },
+    {
+        "id": "25dce164f7db887e",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-04",
+        "info": "",
+        "x": 100,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "fdb2638290658365",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest05.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2760,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "185975455c3ffd96",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2760,
+        "wires": [
+            [
+                "fdb2638290658365"
+            ]
+        ]
+    },
+    {
+        "id": "ce7918d79406c948",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-05",
+        "info": "",
+        "x": 100,
+        "y": 2720,
+        "wires": []
+    },
+    {
+        "id": "256f8c4e0b6e11e2",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest06.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2840,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "5269ef55444e1a91",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2840,
+        "wires": [
+            [
+                "256f8c4e0b6e11e2"
+            ]
+        ]
+    },
+    {
+        "id": "21b359ac9fd0279a",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-06",
+        "info": "",
+        "x": 100,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "9ce2a47706f13c81",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest07.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 2920,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "263b0533894c4318",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2920,
+        "wires": [
+            [
+                "9ce2a47706f13c81"
+            ]
+        ]
+    },
+    {
+        "id": "32a3d13819a04995",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-07",
+        "info": "",
+        "x": 100,
+        "y": 2880,
+        "wires": []
+    },
+    {
+        "id": "94d6e67b558097ac",
+        "type": "file in",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\testing\\OPCtest08.txt",
+        "filenameType": "str",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 3000,
+        "wires": [
+            [
+                "54d6ef3655579937"
+            ]
+        ],
+        "info": "Reading mqtt messages from this file is for testing purposes.\r\nThis node reads a specified file containing synthetic data. \r\n## It processes the contents line by line for further use in the flow."
+    },
+    {
+        "id": "4981724296412a78",
+        "type": "inject",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 3000,
+        "wires": [
+            [
+                "94d6e67b558097ac"
+            ]
+        ]
+    },
+    {
+        "id": "bc31dea9dbd84066",
+        "type": "comment",
+        "z": "d75e80dd9788519e",
+        "name": "OPCUA-08",
+        "info": "",
+        "x": 100,
+        "y": 2960,
+        "wires": []
+    },
+    {
+        "id": "54d6ef3655579937",
+        "type": "delay",
+        "z": "d75e80dd9788519e",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "2",
+        "nbRateUnits": "1",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 860,
+        "y": 3000,
+        "wires": [
+            [
+                "edc150833033412d"
+            ]
+        ]
+    },
+    {
+        "id": "5a545599a506b189",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.3.1.22",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

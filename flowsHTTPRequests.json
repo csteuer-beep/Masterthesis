@@ -1,0 +1,324 @@
+[
+    {
+        "id": "2eaac209ab09f39d",
+        "type": "tab",
+        "label": "HTTP Requests",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0db9245c60b8fc48",
+        "type": "http request",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://url:port/submodels/{{{topic}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "ce64991007c8689e"
+            ]
+        ]
+    },
+    {
+        "id": "ce64991007c8689e",
+        "type": "debug",
+        "z": "2eaac209ab09f39d",
+        "name": "debug 36",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "dc7ce602dc3273e0",
+        "type": "link in",
+        "z": "2eaac209ab09f39d",
+        "name": "PUT /submodels/{{{topic}}}",
+        "links": [],
+        "x": 135,
+        "y": 220,
+        "wires": [
+            [
+                "0db9245c60b8fc48"
+            ]
+        ]
+    },
+    {
+        "id": "bfb0e1994afdb786",
+        "type": "http request",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://url:port/submodels/{{{topic}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "7481eea286ae683d"
+            ]
+        ]
+    },
+    {
+        "id": "7481eea286ae683d",
+        "type": "json",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 510,
+        "y": 440,
+        "wires": [
+            [
+                "7ff76dbb7c569e9a"
+            ]
+        ]
+    },
+    {
+        "id": "d4630dca2817aa4f",
+        "type": "link in",
+        "z": "2eaac209ab09f39d",
+        "name": "GET /submodels/{{{topic}}}",
+        "links": [],
+        "x": 135,
+        "y": 440,
+        "wires": [
+            [
+                "bfb0e1994afdb786"
+            ]
+        ]
+    },
+    {
+        "id": "7ff76dbb7c569e9a",
+        "type": "link out",
+        "z": "2eaac209ab09f39d",
+        "name": "PUT /submodels/{{{topic}}}",
+        "mode": "link",
+        "links": [],
+        "x": 705,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "07578d2f2603755f",
+        "type": "http request",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://url:port/submodels/{{{topic}}}/submodel-elements",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "13c7d8f9ed0bf993"
+            ]
+        ]
+    },
+    {
+        "id": "f73f4b9760a5209d",
+        "type": "link in",
+        "z": "2eaac209ab09f39d",
+        "name": "POST submodel-elements",
+        "links": [
+            "daed732af4442101",
+            "01e5bb6b18231768",
+            "d057c39715a2ded0"
+        ],
+        "x": 135,
+        "y": 320,
+        "wires": [
+            [
+                "07578d2f2603755f"
+            ]
+        ]
+    },
+    {
+        "id": "13c7d8f9ed0bf993",
+        "type": "debug",
+        "z": "2eaac209ab09f39d",
+        "name": "debug 37",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "60dba1af3e1158b6",
+        "type": "inject",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 100,
+        "wires": [
+            [
+                "ef9586fe86bfbe85"
+            ]
+        ]
+    },
+    {
+        "id": "ef9586fe86bfbe85",
+        "type": "function",
+        "z": "2eaac209ab09f39d",
+        "name": "Clean Submodel Structure",
+        "func": "let newObject = {\n\t\t\"modelType\": \"Submodel\",\n\t\t\"kind\": \"Instance\",\n\t\t\"id\": \"https://example.com/ids/sm/5394_1152_3042_8489\",\n\t\t\"idShort\": \"CapacityPlanningDetailedScheduling\",\n\t\t\"submodelElements\": [\n\t\t\t{\n\t\t\t\t\"modelType\": \"SubmodelElementCollection\",\n\t\t\t\t\"idShort\": \"CapacityParameters\",\n\t\t\t\t\"value\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"ProductionTimePerUnit\",\n\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"DelayTime\",\n\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"TechnicalEfficiency\",\n\t\t\t\t\t\t\"value\": null\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"QualityRatio\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"value\": \"*21:35\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"SetupTime\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"modelType\": \"SubmodelElementCollection\",\n\t\t\t\t\"idShort\": \"ProductionOperationRecords\",\n\t\t\t\t\"value\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:dateTime\",\n\t\t\t\t\t\t\"idShort\": \"StartDate\",\n\t\t\t\t\t\t\"value\": \"3.1.2024\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"value\": 21001444,\n\t\t\t\t\t\t\"valueType\": \"xs:int\",\n\t\t\t\t\t\t\"idShort\": \"OperationNumber\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"SetupTime\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"ProductionTime\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"DelayTime\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"ProducedQuantity\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"GoodQuantity\",\n\t\t\t\t\t\t\"value\": 222\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"Factor1\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"Factor2\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"Factor3\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"modelType\": \"Property\",\n\t\t\t\t\t\t\"valueType\": \"xs:float\",\n\t\t\t\t\t\t\"idShort\": \"Factor4\",\n\t\t\t\t\t\t\"value\": \"222\"\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\t}\nmsg.payload = newObject;\n\nmsg.topic = \"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "dd1d1c51af311097",
+                "0db9245c60b8fc48"
+            ]
+        ]
+    },
+    {
+        "id": "dd1d1c51af311097",
+        "type": "debug",
+        "z": "2eaac209ab09f39d",
+        "name": "debug 38",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "29519f9ef5aba00d",
+        "type": "comment",
+        "z": "2eaac209ab09f39d",
+        "name": "clean AAS",
+        "info": "Pushing the timestamp start node, a clear Submodel Structure is send \nto the AAS. This \"deletes\" all entries.",
+        "x": 120,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "9f2d2d868409908c",
+        "type": "comment",
+        "z": "2eaac209ab09f39d",
+        "name": "PUT Request",
+        "info": "This node sends a PUT request to the specified \nURL (http://url:port/submodels/{{{topic}}}) \nto update a submodel based on the topic provided in the message.\n",
+        "x": 290,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f297337672d24391",
+        "type": "comment",
+        "z": "2eaac209ab09f39d",
+        "name": "GET Request",
+        "info": "This node sends a GET request to retrieve a submodel from \nthe specified URL (http://url:port/submodels/{{{topic}}})\nbased on the topic.",
+        "x": 290,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "16f193cf226aec53",
+        "type": "comment",
+        "z": "2eaac209ab09f39d",
+        "name": "POST Request",
+        "info": "This node sends a POST request to create new submodel element at the \nspecified URL (http://url:port/submodels/{{{topic}}}/submodel-elements).\n\nThe topic is taken from the msg object.",
+        "x": 300,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b0e51b84469bc534",
+        "type": "inject",
+        "z": "2eaac209ab09f39d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 480,
+        "wires": [
+            [
+                "bfb0e1994afdb786"
+            ]
+        ]
+    }
+]

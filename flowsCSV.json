@@ -1,0 +1,364 @@
+[
+    {
+        "id": "b6b5f7f4b5458f4c",
+        "type": "tab",
+        "label": "CSV-Input",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8c2256d3a7d499fe",
+        "type": "file in",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\OEE_Metadaten_one_line.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "4634d1e39c2d2053",
+                "8c57b365f923f675"
+            ]
+        ]
+    },
+    {
+        "id": "dae3a8ac167d0919",
+        "type": "debug",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "03860f5643daf662",
+        "type": "inject",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 140,
+        "wires": [
+            [
+                "d52a7bd03ace15a4"
+            ]
+        ]
+    },
+    {
+        "id": "8c57b365f923f675",
+        "type": "debug",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4634d1e39c2d2053",
+        "type": "csv",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "",
+        "spec": "rfc",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 810,
+        "y": 220,
+        "wires": [
+            [
+                "64ca84295e7e053a",
+                "6e17c06e3b653a59"
+            ]
+        ]
+    },
+    {
+        "id": "d52a7bd03ace15a4",
+        "type": "file in",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "",
+        "filename": "C:\\Users\\Public\\Documents\\OEE_CSVs\\OEE_Kurz.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "dae3a8ac167d0919",
+                "4634d1e39c2d2053"
+            ]
+        ]
+    },
+    {
+        "id": "6e17c06e3b653a59",
+        "type": "debug",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a72f54a2d73a7049",
+        "type": "debug",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "64ca84295e7e053a",
+        "type": "function",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "Value Mapping",
+        "func": "// Eingehendes JSON-Objekt aus msg.payload\nlet inputData = msg.payload;\n\n// Hilfsfunktion, um Felder mit Standardwerten zu füllen\nfunction getOrDefault(value, defaultValue = null) {\n    return value !== undefined ? value : defaultValue;\n}\n\nlet keyName = \"ProductionOperationRecords CSV \" + inputData.Datum + inputData['Von Uhrzeit'];\n\nlet Quantity = getOrDefault(inputData.Gutmenge) + getOrDefault(inputData['A+N']);\n// Neues JSON-Objekt gemäß der Zielstruktur erstellen\nlet newObject = {       \n    ProductionOperationRecords:{\n            KeyName: keyName,\n            StartDate: getOrDefault(inputData.Datum),\n            OperationNumber: getOrDefault(inputData.Auftrag),\n            SetupTime: getOrDefault(inputData.Bandwechselzeit),\n            ProductionTime: getOrDefault(inputData.Arbeitszeit),\n            DelayTime: getOrDefault(inputData['Stillstandszeit nicht beeinflussbar']),\n            ProducedQuantity: Quantity, //muss noch summiert werden\n            GoodQuantity: getOrDefault(inputData.Gutmenge),\n            Factor1: getOrDefault(inputData.Breite),\n            Factor2: getOrDefault(inputData.Dicke),\n            Factor3: getOrDefault(inputData.ZAHNFORM),\n            Factor4: getOrDefault(inputData.SCHRAENKUNG)\n        }  \n};\n\n// Das neue JSON in msg.payload setzen\nmsg.payload = newObject;\n\nmsg.topic = \"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==\";\n\n// Die Nachricht zurückgeben\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 300,
+        "wires": [
+            [
+                "a72f54a2d73a7049",
+                "7773d4f4b86edff1"
+            ]
+        ]
+    },
+    {
+        "id": "6b4721c150786899",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "Start Node",
+        "info": "This inject node is used to trigger the flow. \nIt can be triggered manually by clicking the blue button or \nby setting up time intervals.",
+        "x": 100,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5f31d70e93dfd946",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "read file one line",
+        "info": "This node reads a file from the specified path. \nIt processes a file that contains only one line, \nrepresenting a single dataset.",
+        "x": 280,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "59bf5bbad569cede",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "read file mulitple lines",
+        "info": "This node reads a file from the specified path. \nIt processes a file that contains multiple lines, \nrepresenting a dataset with multiple entries.",
+        "x": 300,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "40196e07daf2117d",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "parse csv",
+        "info": "This node parses raw text from a CSV file into a JSON object \nfor later use. It takes the first line as column names \nand converts the remaining lines into datasets, \nrecognizing the CSV format.",
+        "x": 820,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "78a7e45f5bfef9f8",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "mapping to AAS data structure",
+        "info": "This node maps the received data to a JSON structure that is used \nto send to the Asset Administration Shell (AAS).",
+        "x": 1040,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7773d4f4b86edff1",
+        "type": "function",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "generating request body",
+        "func": "// Example output that comes from the previous node\nlet output = msg.payload; // Here the incoming payload is used\n\n// Conversion of the output to the desired body\nmsg.payload = {\n    \"modelType\": \"SubmodelElementCollection\",\n    \"idShort\": output.ProductionOperationRecords.KeyName,\n    \"value\": [\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.StartDate,\n            \"valueType\": \"xs:dateTime\",\n            \"idShort\": \"StartDate\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.OperationNumber,\n            \"valueType\": \"xs:int\",\n            \"idShort\": \"OperationNumber\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.SetupTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"SetupTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProductionTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProductionTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.DelayTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"DelayTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProducedQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProducedQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.GoodQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"GoodQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor1, //parseFloat(output.Factor1.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor1\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor2, //parseFloat(output.Factor2.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor2\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor3, //parseFloat(output.Factor3.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor3\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor4, //parseFloat(output.Factor4.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor4\"\n        }\n    ]\n};\n\nreturn msg; \n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 380,
+        "wires": [
+            [
+                "36fc6e3b33dcc62e",
+                "4a9edc04b4183dce"
+            ]
+        ]
+    },
+    {
+        "id": "36fc6e3b33dcc62e",
+        "type": "debug",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d8ca9f8b9517c3cd",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "Request Body",
+        "info": "This node generates the request body for the API \nbased on the processed data.",
+        "x": 1210,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "65103311305005cd",
+        "type": "link out",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "f73f4b9760a5209d"
+        ],
+        "x": 1655,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "4a9edc04b4183dce",
+        "type": "delay",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "5",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1520,
+        "y": 460,
+        "wires": [
+            [
+                "65103311305005cd"
+            ]
+        ]
+    },
+    {
+        "id": "e5da03907847cb42",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "Message Delay",
+        "info": "allows only 2 messages per second, because AAS cant process to many\nrequests at once.",
+        "x": 1500,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "8c185bf6c9669a0a",
+        "type": "link in",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "link in csv Test",
+        "links": [
+            "ae34af02ee5c892c"
+        ],
+        "x": 715,
+        "y": 320,
+        "wires": [
+            [
+                "64ca84295e7e053a"
+            ]
+        ]
+    },
+    {
+        "id": "c2408176420ebf2f",
+        "type": "comment",
+        "z": "b6b5f7f4b5458f4c",
+        "name": "Link in for test purpose",
+        "info": "",
+        "x": 760,
+        "y": 280,
+        "wires": []
+    }
+]

@@ -1,0 +1,646 @@
+[
+    {
+        "id": "9e7ddb81e38ecc54",
+        "type": "tab",
+        "label": "OPC UA AAS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "19544a9876d38237",
+        "type": "inject",
+        "z": "9e7ddb81e38ecc54",
+        "name": "start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "c86f8a8022a9ab83"
+            ]
+        ]
+    },
+    {
+        "id": "c86f8a8022a9ab83",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "specify topics",
+        "func": "// Liste der Topics, die an den OPC UA-Client gesendet werden sollen\nconst topics = [\n    \"ns=7;s=ActualPosition1\",\n    \"ns=7;s=ActualPosition2\",\n    \"ns=8;s=Objects/OPC400832/Job/ActiveJob/JobName\",\n    \"ns=8;s=Objects/OPC400832/Job/ActiveJobValues/JobStatus\",\n    \"ns=7;s=ActualPosition3\",\n    \"ns=7;s=ActualPosition4\"\n\n    //\"ns=7;s=JobStatus\"\n    //Topic für Job ID\n    //weitere Topics hinzufügen\n];\n\n// Erzeuge ein Array von Nachrichten\nconst messages = topics.map(topic => {\n    return { topic: topic };\n});\n\n// Array von Nachrichten zurückgeben\nreturn [messages];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 220,
+        "wires": [
+            [
+                "3f8009e64afe1d59"
+            ]
+        ]
+    },
+    {
+        "id": "3eea4479a5eb6d74",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 28",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "af4d2e9449d6463a",
+        "type": "join",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Join messages",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "",
+        "count": "6",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 570,
+        "y": 300,
+        "wires": [
+            [
+                "fb14a0ccb14f13d3",
+                "de280ca93e3cbe14"
+            ]
+        ]
+    },
+    {
+        "id": "fb14a0ccb14f13d3",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 29",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f3088f275b06c75a",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 31",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9601eae4d884464f",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Choose and specify nodes",
+        "info": "In this node all OPC topics\nmust be specified for requesting them",
+        "x": 150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7f7c9985f07d5287",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "OPC UA Client",
+        "info": "Client which connects to OPC UA Server asking for \ncurrent data. \ncan be set up differently depending on case\ncan be set up to query data or subscribe data and receive it in real time\n",
+        "x": 360,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a0d86961800adb81",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "joins all incomming messages to one object",
+        "info": "joins all incomming messages to one object\nwhen amount of querried nodes change, this join \nnode also need to be updated at the sent messages part\n\ndepending on how much data nodes are requested \nthe number of joint messages must be updated",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "bff03b76a0e81282",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "node for mapping the receievd data to the data structure json",
+        "info": "node for mapping the receievd data to the data structure json which then is used to send to AAS",
+        "x": 1120,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "6086f39592b23c4c",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Start Node",
+        "info": "Give \"inject\" \nneeded to trigger the flow. \nCan be triggert manually by klicking the blue button in front\nor by setting up e.g. time intervalls.",
+        "x": 100,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "3f8009e64afe1d59",
+        "type": "OpcUa-Client",
+        "z": "9e7ddb81e38ecc54",
+        "endpoint": "09b741491be0f58b",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "useTransport": false,
+        "maxChunkCount": 1,
+        "maxMessageSize": 8192,
+        "receiveBufferSize": 8192,
+        "sendBufferSize": 8192,
+        "setstatusandtime": false,
+        "keepsessionalive": false,
+        "name": "",
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "3eea4479a5eb6d74",
+                "af4d2e9449d6463a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e01dc6ae05afb0f7",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Value Mapping",
+        "func": "// Eingehendes JSON-Objekt aus msg.payload\nlet inputData = msg.payload;\n\n\nlet Job = flow.get(\"FlowJob\") || 0;\nvar setupTime = flow.get(\"setupTime\") || 0;\nvar delayTime = flow.get(\"delayTime\") || 0;\nvar productionTime = flow.get(\"productionTime\") || 0;\n\n// Hilfsfunktion, um Felder mit Standardwerten zu füllen\nfunction getOrDefault(value, defaultValue = null) {\n    return value !== undefined ? value : defaultValue;\n}\nfunction isValidISODateTime(value) {\n  const isoDateTimeRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([+-]\\d{2}:\\d{2}|Z)$/;\n  return isoDateTimeRegex.test(value);\n} \nlet keyName = \"ProductionOperationRecords OPC UA \";\n\nif (msg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJobValues/JobStatus']!=null &&\nmsg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJob/JobName']!=null &&\nmsg.payload['ns=7;s=ActualPosition1'] !=null &&\nmsg.payload['ns=7;s=ActualPosition2'] !=null &&\nmsg.payload['ns=7;s=ActualPosition3'] !=null &&\nmsg.payload['ns=7;s=ActualPosition4'] !=null ){\n\n// Neues JSON-Objekt gemäß der Zielstruktur erstellen\nlet newObject = {       \n    ProductionOperationRecords:{\n            KeyName: keyName,\n            StartDate: getOrDefault(msg.serverTimestamp),\n            OperationNumber: getOrDefault(Job),\n            SetupTime: getOrDefault(setupTime),\n            ProductionTime: getOrDefault(productionTime),\n            DelayTime: getOrDefault(delayTime),\n            ProducedQuantity: 1, \n            GoodQuantity: 1,\n            Factor1: getOrDefault(inputData['ns=7;s=ActualPosition1']),\n            Factor2: getOrDefault(inputData['ns=7;s=ActualPosition2']),\n            Factor3: getOrDefault(inputData['ns=7;s=ActualPosition3']),\n            Factor4: getOrDefault(inputData['ns=7;s=ActualPosition4'])\n        }  \n};\n\nflow.set(\"FlowJob\", inputData['ns=8;s=Objects/OPC400832/Job/ActiveJob/JobName']);\n\n// Das neue JSON in msg.payload setzen\nmsg.payload = newObject;\n\n// Die Nachricht zurückgeben\nreturn msg;\n} else {\n node.warn(`No Job ID or missing crucial data: ` + msg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJob/JobName']);\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 380,
+        "wires": [
+            [
+                "f3088f275b06c75a",
+                "80a98f195ce31c63"
+            ]
+        ]
+    },
+    {
+        "id": "80a98f195ce31c63",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Aggregate data and calculate mean",
+        "func": "// Liste der Attribute, für die der Mittelwert berechnet werden soll\nconst attributes = [\"Factor1\", \"Factor2\", \"Factor3\", \"Factor4\"];\n\n// Sicherstellen, dass die Payload gültig ist\nconst records = msg.payload?.ProductionOperationRecords;\n\nif (!records) {\n    node.warn(\"Fehlende oder ungültige ProductionOperationRecords in der Payload\");\n    return null; // Beenden, wenn die erwartete Struktur nicht vorhanden ist\n}\n\n// Globale oder Flow-Variablen für Tracking abrufen\nlet aggregateData = flow.get(\"aggregateData\") || {};\nlet currentJob = flow.get(\"currentJob\") || null;\n\nvar setupTime = flow.get(\"setupTime\") || 0;\nvar delayTime = flow.get(\"delayTime\") || 0;\nvar productionTime = flow.get(\"productionTime\") || 0;\n\n\nlet startTime = flow.get(\"startTime\") || null;\nif (typeof startTime === \"string\") {\n    startTime = new Date(startTime);\n}\nlet endTime = flow.get(\"startTime\") || null;\nlet msgTime = msg.serverTimestamp; \nif (typeof msgTime === \"string\") {\n    msgTime = new Date(msgTime);\n}\n\n// Neue Kopie von StartTime erstellen\nlet tempTime = new Date(startTime.getTime()); \n\n// Zeitzone manuell auf UTC+1 korrigieren\ntempTime.setUTCHours(tempTime.getUTCHours() + 1);\n\n//let prodTime = msgTime - startTime; // Dauer berechnen\n\n// Startzeit in UTC+1 speichern\nlet formattedTime = tempTime.toISOString();\n\n// Die aktuelle Job-ID aus der Nachricht extrahieren\nconst newJob = records.OperationNumber;\n\n// Prüfen, ob sich der Job geändert hat\nif (currentJob !== newJob) {\n    \n    if(currentJob == null) {\n    flow.set(\"currentJob\", newJob);\n    return;\n    }\n    \n    // Mittelwert berechnen und in den Payload schreiben\n    attributes.forEach(attr => {\n        const data = aggregateData[attr];\n        if (data?.count > 0) {\n            records[attr] = data.sum / data.count; // Mittelwert berechnen und in den Payload schreiben\n        } else {\n            records[attr] = null; // Kein Datenwert vorhanden\n        }\n    });\n\n\n\n    flow.set(\"startTime\", msgTime);\n    msg.payload.ProductionOperationRecords.StartDate = formattedTime;\n    \n    msg.payload.ProductionOperationRecords.ProductionTime = productionTime;\n    msg.payload.ProductionOperationRecords.DelayTime = delayTime;\n    msg.payload.ProductionOperationRecords.SetupTime = setupTime;\n\n    //vorherigen job im Payload hinterlegen\n    msg.payload.ProductionOperationRecords.OperationNumber = currentJob;\n\n    // Debug-Informationen hinzufügen\n    msg.payload.aggregateData = aggregateData;\n    msg.payload.ProductionOperationRecords.KeyName = msg.payload.ProductionOperationRecords.KeyName + new Date();\n    // Aggregationsdaten zurücksetzen\n    aggregateData = {};\n    attributes.forEach(attr => {\n        aggregateData[attr] = { sum: 0, count: 0 };\n    });\n\n    // Neuen Job speichern\n    //currentJob = newJob;\n    flow.set(\"currentJob\", newJob);\n\n    // Zurücksetzen der Variablen\n    flow.set(\"aggregateData\", aggregateData);\n    flow.set(\"setupTime\", 0);\n    flow.set(\"delayTime\", 0);\n    flow.set(\"productionTime\", 0);\n\n    msg.changed = \"true\";\n\n    return msg; // Nachricht mit aktualisierter Payload zurückgeben\n}\n\n// Daten aggregieren\nattributes.forEach(attr => {\n    const value = parseFloat(records[attr]);\n\n    if (!isNaN(value)) {\n        if (!aggregateData[attr]) {\n            aggregateData[attr] = { sum: 0, count: 0 };\n        }\n        aggregateData[attr].sum += value;\n        aggregateData[attr].count += 1;\n    } else {\n        node.warn(`Invalid value for attribute ${attr}: ${records[attr]}`);\n    }\n});\n\n// Aktualisierte Aggregationsdaten speichern\nflow.set(\"aggregateData\", aggregateData);\n\n// Mittelwerte berechnen und in die Payload schreiben (ohne Job-Wechsel)\nattributes.forEach(attr => {\n    const data = aggregateData[attr];\n    if (data?.count > 0) {\n        records[attr] = data.sum / data.count; // Mittelwert berechnen und in die Payload schreiben\n    } else {\n        records[attr] = null; // Kein Datenwert vorhanden\n    }\n});\n\n// Nachricht mit aktualisierter Payload zurückgeben\nreturn msg;\n\n\n\n\n/*// Liste der Attribute, für die der Mittelwert berechnet werden soll\nconst attributes = [\"Factor1\", \"Factor2\", \"Factor3\", \"Factor4\"];\n\n// Sicherstellen, dass die Payload gültig ist\nconst records = msg.payload?.ProductionOperationRecords;\nconst jobChanged = msg.payload?.JobChanged;\n\nif (!records) {\n    node.warn(\"Fehlende oder ungültige ProductionOperationRecords in der Payload\");\n    return null; // Beenden, wenn die erwartete Struktur nicht vorhanden ist\n}\n\n// Globale oder Flow-Variablen für die Aggregation abrufen oder initialisieren\nlet aggregateData = flow.get(\"aggregateData\") || {};\n\n// Prüfen, ob sich der Job geändert hat\nif (jobChanged) {\n    // Mittelwert berechnen und in die Nachricht schreiben\n    msg.means = {};\n    attributes.forEach(attr => {\n        const data = aggregateData[attr];\n        if (data?.count > 0) {\n            msg.means[attr] = data.sum / data.count-1;\n        } else {\n            msg.means[attr] = null; // Kein Datenwert vorhanden\n        }\n    });\n\n    // Debug-Informationen hinzufügen\n    msg.aggregateData = aggregateData;\n\n    // Aggregationsdaten zurücksetzen\n    aggregateData = {};\n    attributes.forEach(attr => {\n        aggregateData[attr] = { sum: 0, count: 0 };\n    });\n\n    // Zurücksetzen der Variablen\n    flow.set(\"aggregateData\", aggregateData);\n\n    return msg; // Nachricht mit den berechneten Mittelwerten zurückgeben\n}\n\n// Daten aggregieren\nattributes.forEach(attr => {\n    if (!aggregateData[attr]) {\n        aggregateData[attr] = { sum: 0, count: 0 };\n    }\n\n    const value = parseFloat(records[attr]);\n    if (!isNaN(value)) {\n        aggregateData[attr].sum += value;\n        aggregateData[attr].count += 1;\n    } else {\n        node.warn(`Ungültiger Wert für Attribut ${attr}: ${records[attr]}`);\n    }\n});\n\n// Aktualisierte Aggregationsdaten speichern\nflow.set(\"aggregateData\", aggregateData);\n\n// Nachricht zurückgeben (ohne Mittelwertberechnung, da der Job nicht geändert wurde)\nreturn msg;\n\n\n\n\n\n\n\n/*\n// List of attributes to calculate the mean for\nconst attributes = [\"Factor1\", \"Factor2\", \"Factor3\", \"Factor4\"];\n\n// Parse the payload to ensure it's JSON\nconst records = msg.payload?.ProductionOperationRecords;\n\nif (!records) {\n    node.warn(\"Missing or invalid ProductionOperationRecords in the payload\");\n    return null; // Exit if the expected structure is not present\n}\n\n// Retrieve or initialize flow variables for tracking aggregate data\nlet aggregateData = flow.get(\"aggregateData\") || {};\n\n// Initialize aggregate and count for each attribute if not already present\nattributes.forEach(attr => {\n    if (!aggregateData[attr]) {\n        aggregateData[attr] = { sum: 0, count: 0 };\n        node.warn(`Sum and count: ${aggregateData[attr].sum} and ${aggregateData[attr].count}`);\n    }\n\n    // Parse and validate the value\n    const value = parseFloat(records[attr]);\n    if (!isNaN(value)) {\n        // Update the sum and count\n        aggregateData[attr].sum += value;\n        aggregateData[attr].count += 1;\n    } else {\n        node.warn(`Invalid value for attribute ${attr}: ${records[attr]}`);\n    }\n});\n\n// Prepare output with means for all attributes\nmsg.means = {};\nattributes.forEach(attr => {\n    const data = aggregateData[attr];\n    if (data.count > 0) {\n        msg.means[attr] = data.sum / data.count; // Calculate mean\n    } else {\n        msg.means[attr] = null; // No data received for this attribute yet\n    }\n});\n\n// Include additional debug information\nmsg.aggregateData = aggregateData;\n\n// Save the updated aggregate data back to flow variables\nflow.set(\"aggregateData\", null);\n\nreturn msg;\n*/\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 460,
+        "wires": [
+            [
+                "675122b5f3a7dd90",
+                "ce6393bc7b172664"
+            ]
+        ]
+    },
+    {
+        "id": "b156c44524e1949e",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "simulate jobchange",
+        "func": "// Get the current value of the flow variable \"FlowJob\"\n//let currentJob = flow.get(\"FlowJob\") || 0; // Default value is 0 if not set\nlet currentJob = \"testchangejob\";\n\n\n// Save the updated value of the flow variable\nflow.set(\"FlowJob\", currentJob);\n\n// Debug output (optional)\nnode.warn(\"FlowJob: \" + currentJob);\n\n// Return the new value (if needed)\nmsg.payload = { FlowJob: currentJob };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dca92ccdfa0b9be8",
+        "type": "inject",
+        "z": "9e7ddb81e38ecc54",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 640,
+        "wires": [
+            [
+                "b156c44524e1949e"
+            ]
+        ]
+    },
+    {
+        "id": "675122b5f3a7dd90",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1540,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ce6393bc7b172664",
+        "type": "switch",
+        "z": "9e7ddb81e38ecc54",
+        "name": "",
+        "property": "changed",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1540,
+        "y": 540,
+        "wires": [
+            [
+                "c80ae64261d2dfa4",
+                "50c5f626ca778ea3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c80ae64261d2dfa4",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1700,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "50c5f626ca778ea3",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Generate request body",
+        "func": "// Example output that comes from the previous node\nlet output = msg.payload; // Here the incoming payload is used\n\n// Conversion of the output to the desired body\nmsg.payload = {\n    \"modelType\": \"SubmodelElementCollection\",\n    \"idShort\": output.ProductionOperationRecords.KeyName,\n    \"value\": [\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.StartDate,\n            \"valueType\": \"xs:dateTime\",\n            \"idShort\": \"StartDate\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.OperationNumber,\n            \"valueType\": \"xs:int\",\n            \"idShort\": \"OperationNumber\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.SetupTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"SetupTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProductionTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProductionTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.DelayTime,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"DelayTime\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.ProducedQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"ProducedQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.GoodQuantity,\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"GoodQuantity\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor1, //parseFloat(output.Factor1.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor1\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor2, //parseFloat(output.Factor2.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor2\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor3, //parseFloat(output.Factor3.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor3\"\n        },\n        {\n            \"modelType\": \"Property\",\n            \"value\": output.ProductionOperationRecords.Factor4, //parseFloat(output.Factor4.replace(',', '.')),\n            \"valueType\": \"xs:float\",\n            \"idShort\": \"Factor4\"\n        }\n    ]\n};\n\nmsg.topic = \"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ==\";\n\nreturn msg; // Rückgabe des modifizierten msg\n\n\n\n\n\n\n\n/*// Hole das Array mit den beiden Objekten\nlet dataArray = msg.payload;\n//let newmsg = {};\n\n// Variablen für die Originaldaten und die neuen Werte\nlet originalData = null;\nlet newData = null;\n\n// Durchlaufe das Array und identifiziere die Objekte\ndataArray.forEach(item => {\n    if (item.payload && item.payload.modelType === \"Submodel\") {\n        originalData = item; // Das Originalobjekt\n    } else if (item.payload && item.payload.CapacityPlanningDetailedScheduling) {\n        newData = item.payload.CapacityPlanningDetailedScheduling; // Das neue Objekt\n    }\n});\n\n// Funktion zum Aktualisieren der Werte\nfunction updateValues(original, newValues) {\n    // Aktualisiere die CapacityParameters\n    if (original.payload.submodelElements) {\n        let capacityParams = original.payload.submodelElements.find(el => el.idShort === \"CapacityParameters\");\n        if (capacityParams && newValues.CapacityParameters) {\n            for (let key in newValues.CapacityParameters) {\n                if (newValues.CapacityParameters.hasOwnProperty(key)) {\n                    let param = capacityParams.value.find(p => p.idShort === key);\n                    if (param) {\n                        param.value = newValues.CapacityParameters[key];\n                    }\n                }\n            }\n        }\n    }\n\n    // Aktualisiere die ProductionOperationRecords\n    if (original.payload.submodelElements) {\n        let productionRecords = original.payload.submodelElements.find(el => el.idShort === \"ProductionOperationRecords\");\n        if (productionRecords && newValues.ProductionOperationRecords) {\n            for (let key in newValues.ProductionOperationRecords) {\n                if (newValues.ProductionOperationRecords.hasOwnProperty(key)) {\n                    let record = productionRecords.value.find(p => p.idShort === key);\n                    if (record) {\n                        record.value = newValues.ProductionOperationRecords[key];\n                    }\n                }\n            }\n        }\n    }\n}\n// Überprüfen, ob beide Daten gefunden wurden\nif (originalData && newData) {\n    // Aktualisiere die Originaldaten mit den neuen Werten\n    updateValues(originalData, newData);\n    \n    // Setze das aktualisierte JSON wieder in msg.payload\n    msg.payload = originalData;\n} else {\n    // Fehlermeldung, wenn eines der Objekte nicht gefunden wurde\n    msg.payload = { error: \"Ein oder beide Objekte wurden nicht gefunden.\" };\n}\n\n// Setze den Header\nconst headers = {\n    \"Content-Type\": \"application/json\"\n};\n\n// **Erstelle ein komplett neues Objekt** und gebe es zurück\nreturn {\n    payload: msg.payload.payload,\n    headers: headers,\n    topic: msg.payload.topic  //\"aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNTM5NF8xMTUyXzMwNDJfODQ4OQ\"\n\n}; */",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1740,
+        "y": 620,
+        "wires": [
+            [
+                "d057c39715a2ded0"
+            ]
+        ]
+    },
+    {
+        "id": "ee844d8fc47a9064",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "check for changed job",
+        "info": "This switch node evaluates a condition based on the message's \n\"changed\" property and directs the flow accordingly.",
+        "x": 1600,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "62d4493868c8a608",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Request Body",
+        "info": "This function node constructs a request body based on the mapped data \nfrom previous nodes, preparing it for API requests.",
+        "x": 1710,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d057c39715a2ded0",
+        "type": "link out",
+        "z": "9e7ddb81e38ecc54",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "f73f4b9760a5209d"
+        ],
+        "x": 1855,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e5dfdd7c9c82d303",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Simulate Job Change",
+        "info": "press this button to change job variable\nthis triggers the aggregation and request",
+        "x": 140,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2e15ef817104b86c",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "reset flow variables",
+        "func": "// Zurücksetzen der Variablen\nflow.set(\"aggregateData\", null);\nflow.set(\"startTime\", null);\nflow.set(\"currentJob\", null);\n\nflow.set(\"lastStatus\", null);\nflow.set(\"lastTimestamp\", null);\nflow.set(\"setupTime\", 0);\nflow.set(\"delayTime\", 0);\nflow.set(\"productionTime\", 0);\n\n\n// Warnung mit den aktuellen Werten ausgeben\nnode.warn(\"currentJob: \" + flow.get(\"currentJob\"));\nnode.warn(\"aggregateData: \" + flow.get(\"aggregateData\"));\nnode.warn(\"startTime: \" + flow.get(\"startTime\"));\nnode.warn(\"setupTime: \" + flow.get(\"setupTime\"));\nnode.warn(\"delayTime: \" + flow.get(\"delayTime\"));\nnode.warn(\"productionTime: \" + flow.get(\"productionTime\"));\n\n// Nachricht zurückgeben\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6874375ccf667944",
+        "type": "inject",
+        "z": "9e7ddb81e38ecc54",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "2e15ef817104b86c"
+            ]
+        ]
+    },
+    {
+        "id": "23449c706ff92a53",
+        "type": "link in",
+        "z": "9e7ddb81e38ecc54",
+        "name": "link in reset flow var",
+        "links": [
+            "59a8dba85704f319"
+        ],
+        "x": 145,
+        "y": 480,
+        "wires": [
+            [
+                "2e15ef817104b86c"
+            ]
+        ]
+    },
+    {
+        "id": "fdc67b4681f5566d",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Nodes for testing purposes",
+        "info": "",
+        "x": 150,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "43a75451aae5b270",
+        "type": "link in",
+        "z": "9e7ddb81e38ecc54",
+        "name": "link in OPC UA",
+        "links": [
+            "2d0e72372a254787"
+        ],
+        "x": 145,
+        "y": 420,
+        "wires": [
+            [
+                "ee5d611c33be2f7f",
+                "de280ca93e3cbe14"
+            ]
+        ]
+    },
+    {
+        "id": "ee5d611c33be2f7f",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 22",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5853cfa62df89355",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Calculate Time in States",
+        "func": "// Retrieve stored values\n\nvar lastStatus = flow.get(\"lastStatus\") || null;\nvar lastTimestamp = flow.get(\"lastTimestamp\") || null;\nlet currentStatus;\nvar setupTime = flow.get(\"setupTime\") || 0;\nvar delayTime = flow.get(\"delayTime\") || 0;\nvar productionTime = flow.get(\"productionTime\") || 0;\n\n// Get current timestamp and status\nvar currentTimestamp = new Date().getTime(); // Current time in milliseconds\nif (msg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJobValues/JobStatus']===null || msg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJobValues/JobStatus'] === 0){\n     currentStatus = 12;\n}else{\n currentStatus = msg.payload['ns=8;s=Objects/OPC400832/Job/ActiveJobValues/JobStatus']; }// Incoming status\n\n// If this is the first message, just store the status & timestamp\nif (lastStatus === null || lastTimestamp === null) {\n    flow.set(\"lastStatus\", currentStatus);\n    flow.set(\"lastTimestamp\", currentTimestamp);\n    return null; // Don't send any output yet\n};\n\n// Calculate time spent in previous status\nvar timeSpent = (currentTimestamp - lastTimestamp) / 1000; // Convert ms to seconds\n\n// Assign time to the correct category\nif ((lastStatus >= 1 && lastStatus <= 5) || (lastStatus >= 8 && lastStatus <= 11)) {\n    setupTime += timeSpent;\n} else if (lastStatus === 12 || lastStatus === 7) {\n    delayTime += timeSpent;\n} else if (lastStatus === 6) {\n    productionTime += timeSpent;\n}\n\n// Store updated times\nflow.set(\"setupTime\", setupTime);\nflow.set(\"delayTime\", delayTime);\nflow.set(\"productionTime\", productionTime);\n\n// Update last status and timestamp\nflow.set(\"lastStatus\", currentStatus);\nflow.set(\"lastTimestamp\", currentTimestamp);\n\n// Output the accumulated times\nmsg.payload = {\n    setupTime: setupTime,\n    delayTime: delayTime,\n    productionTime: productionTime\n};\n\n//node.warn(msg.payload);\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 500,
+        "wires": [
+            [
+                "be54caeb69b030b9"
+            ]
+        ]
+    },
+    {
+        "id": "be54caeb69b030b9",
+        "type": "debug",
+        "z": "9e7ddb81e38ecc54",
+        "name": "debug 23",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "de280ca93e3cbe14",
+        "type": "function",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Funnel",
+        "func": "let startTime = flow.get(\"startTime\") || null;\nif (startTime == null) {\n    let timenew = new Date();\n    flow.set(\"startTime\", timenew);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 380,
+        "wires": [
+            [
+                "5853cfa62df89355",
+                "e01dc6ae05afb0f7"
+            ]
+        ]
+    },
+    {
+        "id": "ae0ecbd32c3799ef",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Funnel Node",
+        "info": "This node combines the two incoming ways, once the OPC UA server,\nand second the testing messages. \n\nAlso it generates Flowvariables used in following nodes\nwhen not initiated yet.",
+        "x": 790,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "fdf634b760d1c0cf",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Time Sum",
+        "info": "This node sums the total time spent in differen job statuses\nit takes timestamps and calcualtes the sum of seconds spent in a status.",
+        "x": 960,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "82af3da9050214f0",
+        "type": "comment",
+        "z": "9e7ddb81e38ecc54",
+        "name": "Aggregation node",
+        "info": "This function node aggregates data for specified attributes \nand calculates their mean values, resetting the aggregation data \nwhen a new job is detected.",
+        "x": 1230,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "09b741491be0f58b",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://IPAdress:Port ",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    }
+]
